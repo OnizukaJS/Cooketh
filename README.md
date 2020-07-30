@@ -65,7 +65,7 @@ Everybody wins.
 | `POST`     | `/bookings/new`             | Send the created event form data to the server (from /recipe:id form) | {data, time, address, number of dishes}                      |
 | `GET`      | `/bookings/:id/decline`     | **Deletes** a **PENDING** booking from DB                    |                                                              |
 | `GET`      | `/bookings/:id/accept`      | **Accepts** a **PENDING** booking from DB                    |                                                              |
-| --------   | ----routes/user.js----      | --------                                                     | --------                                                     |
+| --------   | ---routes/user.js---        | --------                                                     | --------                                                     |
 | `GET`      | `profile-user/:id/edit`     | Renders edit user profile view                               |                                                              |
 | `POST`     | `profile-user/:id/edit`     | Sends edit-profile info to server and updates user in DB     | { name, email, phone-number, address, age, diet, allergies, password, description, profile picture, social media} |
 | `GET`      | `profile-user/:id`          | Renders user profile view                                    |                                                              |
