@@ -42,28 +42,22 @@ const chefSchema = new Schema({
         type: String,
         required: true
     },
-    profilePic: String,
-    facebookLink: String,
-    instagramLink: String,
-    twitterLink: String,
-    recipes: [ //Vincula este modelo con recipes. Es un array porque hay varias recetas
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Recipe' //Referencia al modelo exportado
-        }
-    ],
-    pendingBookings: [ //Vincula este modelo con pending Bookings. Es un array proque pueden haber varios pending bookings.
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Booking'
-        }
-    ],
-    acceptedBookings: [ //Vincula este modelo con pending Bookings. Es un array proque pueden haber varios pending bookings.
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Booking'
-        }
-    ]
+    picture: String,
+    facebook: String,
+    instagram: String,
+    twitter: String,
+    recipes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Recipe'
+    }],
+    pendingBookings: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Booking'
+    }],
+    acceptedBookings: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Booking'
+    }]
 }, {
     timestamps: true
 });
