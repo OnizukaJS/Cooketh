@@ -39,6 +39,7 @@ const userSchema = new Schema({
     facebook: String,
     instagram: String,
     twitter: String,
+
     pendingBookings: [ //Vincula este modelo con pending Bookings. Es un array proque pueden haber varios pending bookings.
         {
             type: Schema.Types.ObjectId,

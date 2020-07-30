@@ -38,8 +38,11 @@ const chefSchema = new Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String,
+        required: true
+    },
     profilePic: String,
-    description: String,
     facebookLink: String,
     instagramLink: String,
     twitterLink: String,

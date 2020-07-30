@@ -1,8 +1,8 @@
-# Cooketh
+![cook](https://media.giphy.com/media/LVBH3rg1BUROw/giphy.gif)
+
+# cooketh
 
 <br>
-
-
 
 ## Description
 
@@ -35,31 +35,6 @@ Everybody wins.
   -As a chef I wan to see my accepted bookings or delete my pending requests.
 - **FAQ** - As a user and as a chef I want to see the most frequented asked questions about this website.
 
-
-
-## Backlog
-
-List of other features outside of the MVPs scope
-
-- Home: recipes inspirations (reusar del listado de recetas)
-- Video background on home
-- Register validation
-- Extender a más zonas
-- Notificación request declined al user
-- Editar bookings
-
-- Image carousel on list of recipes preview
-- Comments when submitting a request to the chef.
-- Feedbacks
-  - Score in feedback to the chef (when booking is over) 
-  - Score in feedback to the recipe (when booking is over) 
-  - Feedback from chef to user
-- Save recipes in favourites
-- Upon request, show to chef if user has any allergies or if it's vegan/vegeterian as extra info in the preview
-- Number of bookings shown in profile (user and chef).
-
-
-
 <br>
 
 
@@ -68,22 +43,41 @@ List of other features outside of the MVPs scope
 
 
 
-| **Method** | **Route**                          | **Description**                                              | Request  - Body                                          |
-| ---------- | ---------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------- |
-| `GET`      | `/`                                | Main page route.  Renders home `index` view.                 |                                                          |
-| `GET`      | `/login`                           | Renders `login` form view.                                   |                                                          |
-| `POST`     | `/login`                           | Sends Login form data to the server.                         | { email, password }                                      |
-| `GET`      | `/signup`                          | Renders `signup` form view.                                  |                                                          |
-| `POST`     | `/signup`                          | Sends Sign Up info to the server and creates user in the DB. | {  email, password  }                                    |
-| `GET`      | `/private/edit-profile`            | Private route. Renders `edit-profile` form view.             |                                                          |
-| `PUT`      | `/private/edit-profile`            | Private route. Sends edit-profile info to server and updates user in DB. | { email, password, [firstName], [lastName], [imageUrl] } |
-| `GET`      | `/private/favorites`               | Private route. Render the `favorites` view.                  |                                                          |
-| `POST`     | `/private/favorites/`              | Private route. Adds a new favorite for the current user.     | { name, cuisine, city, }                                 |
-| `DELETE`   | `/private/favorites/:restaurantId` | Private route. Deletes the existing favorite from the current user. |                                                          |
-| `GET`      | `/restaurants`                     | Renders `restaurant-list` view.                              |                                                          |
-| `GET`      | `/restaurants/details/:id`         | Render `restaurant-details` view for the particular restaurant. |                                                          |
-
-
+| **Method** | **Route**                   | **Description**                                              | Request  - Body                                              |
+| ---------- | --------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `GET`      | `/login`                    | Renders `login` form view.                                   |                                                              |
+| `POST`     | `/login`                    | Sends Login form data to the server. Redirects both users and chefs to the home page. | { email, password, areYouAChef?: true/false}                 |
+| `GET`      | `/signup-user`              | Renders `signup` USER form view.                             |                                                              |
+| `POST`     | `/signup-user`              | Sends sign-up USER info to the server and creates user in the DB.<br />Redirects the user to the login page. | {  name, email, phone-number, address, age, diet, allergies, password  }<br />{<u>not mandatory</u>: description, profile picture, social media} |
+| `GET`      | `/signup-chef`              | Renders `signup` CHEF form view.                             |                                                              |
+| `POST`     | `/signup-chef`              | Sends sign-up USER info to the server and creates user in the DB.<br />Redirects the chef to the login page. | {  name, email, phone-number, address, age, main-specialty, working-days, working-city, password, description  }<br />{<u>not mandatory</u>: profile picture, social media} |
+| `GET`      | `/logout`                   |                                                              |                                                              |
+|            |                             |                                                              |                                                              |
+| `GET`      | `/`                         | Main page route. Renders index view                          |                                                              |
+| `GET`      | `/faqs`                     | Renders FAQ view                                             |                                                              |
+|            |                             |                                                              |                                                              |
+| `GET`      | `/recipes`                  | Renders list of all recipes view                             |                                                              |
+| `GET`      | `/recipes/:id`              | Renders the selected recipe view                             |                                                              |
+|            | MIDDLEWARE ACCESS           |                                                              |                                                              |
+| `GET`      | `/recipes/new`              | Renders the create recipe form                               |                                                              |
+| `POST`     | `/recipes/new`              | Sends created reicpe form data to the server.<br />Redirects to chef profile. | {title, type of food, diet, allergies, serves X PAX, price/serving, ingredients, description, pictures} |
+| `GET`      | `/recipes/:id/edit`         | Renders the edit recipe view                                 |                                                              |
+| `POST`     | `/recipes/:id/edit`         | Send edit recipe info to server and updates the recipe in DB | {title, type of food, diet, allergies, serves X PAX, price/serving, ingredients, description, pictures} |
+| `GET`      | `recipes/:id/delete`        | **Deletes** selected recipe (only if user created it).       |                                                              |
+|            |                             |                                                              |                                                              |
+| `POST`     | `/bookings/new`             | Send the created event form data to the server (from /recipe:id form) | {data, time, address, number of dishes}                      |
+| `GET`      | `/bookings/:id/decline`     | **Deletes** a **PENDING** booking from DB                    |                                                              |
+| `GET`      | `/bookings/:id/accept`      | **Accepts** a **PENDING** booking from DB                    |                                                              |
+|            |                             |                                                              |                                                              |
+| `GET`      | `profile-user/:id/edit`     | Renders edit user profile view                               |                                                              |
+| `POST`     | `profile-user/:id/edit`     | Sends edit-profile info to server and updates user in DB     | {  name, email, phone-number, address, age, diet, allergies, password, description, profile picture, social media} |
+| `GET`      | `profile-user/:id`          | Renders user profile view                                    |                                                              |
+| `GET`      | `profile-user/:id/bookings` | Renders user's bookings (pending & accepted) view            |                                                              |
+|            |                             |                                                              |                                                              |
+| `GET`      | `profile-chef/:id/edit`     | Renders edit chef profile view                               |                                                              |
+| `POST`     | `profile-chef/:id/edit`     | Sends edit-profile info to server and updates user in DB     | {  name, email, phone-number, address, age, diet, allergies, password, description, profile picture, social media} |
+| `GET`      | `profile-chef/:id`          | Renders chef profile view                                    |                                                              |
+| `GET`      | `profile-chef/:id/bookings` | Renders chef's bookings (pending & accepted) view            | {  name, email, phone-number, address, age, main-specialty, working-days, working-city, password, description, profile picture, social media} |
 
 
 
@@ -95,23 +89,93 @@ User model
 
 ```javascript
 {
-  name: String,
-  email: String,
-  password: String,
-  favorites: [FavoriteId],
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    phoneNumber: { type: String, required: true },
+    address: { type: String, required: true },
+    age: { type: Number, required: true },
+    diet: { type: String, required: true },
+    allergies: { type: [String], required: true },
+    password: { type: String, required: true },
+    picture: String,
+    description: String,
+    facebook: String,
+    instagram: String,
+    twitter: String,
+    pendingBookings: [ { type: Schema.Types.ObjectId, ref: 'Booking' } ],
+    acceptedBookings: [ { type: Schema.Types.ObjectId, ref: 'Booking' }]
+}, 
+{ 
+		timestamps: true 
 }
-
 ```
 
 
 
-Favorites model
+Chef model
 
 ```javascript
 {
-  placeId: String,
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    phoneNumber: { type: String, required: true },
+    address: { type: String, required: true },
+    age: { type: Number, required: true },
+    mainCookSpecialty: { type: String, required: true },
+    workingDays: { type: [String], required: true },
+    workingCity: { type: String, required: true },
+    password: { type: String, required: true },
+    description: { type: String, required: true },
+		picture: String,
+    facebook: String,
+    instagram: String,
+    twitter: String,
+    recipes: [ { type: Schema.Types.ObjectId, ref: 'Recipe' }]
+    pendingBookings: [ { type: Schema.Types.ObjectId, ref: 'Booking' } ],
+    acceptedBookings: [ { type: Schema.Types.ObjectId, ref: 'Booking' }]
+}, 
+{ 
+		timestamps: true 
 }
+```
 
+
+Recipe model
+
+```javascript
+{
+    title: { type: String, required: true },
+    typeOfFood: { type: String, required: true },
+    diet: { type: String, required: true },
+    allergies: { type: [String], required: true },
+    serves: { type: String, required: true },
+    price: { type: Number, required: true },
+    ingredients: { type: String, required: true },
+    description: { type: String, required: true },
+    pictures: { type: String, required: true },
+    chef: { type: Schema.Types.ObjectId, ref: 'Chef'}
+}, 
+{
+    timestamps: true
+}
+```
+
+
+Booking model
+
+```javascript
+{
+    date: { type: Date, required: true },
+    hour: { type: String, required: true },
+    address: { type: String, required: true },
+    numberOfDishes: { type: Number, required: true },
+    chef: { type: Schema.Types.ObjectId, ref: 'Chef'}
+    customer: { type: Schema.Types.ObjectId, ref: 'User'}
+    recipe: [ { type: Schema.Types.ObjectId, ref: 'Recipe' } ]
+}, 
+{
+    timestamps: true
+}
 ```
 
 
@@ -122,9 +186,7 @@ Favorites model
 
 ## Backlog
 
-[See the Trello board.](https://trello.com/b/Ni3giVKf/ironhackproject)
-
-
+[See the cooketh Trello board](https://trello.com/b/Y5GMYe0T/m2-cooketh-jb-serge)
 
 <br>
 
@@ -132,28 +194,26 @@ Favorites model
 
 ## Links
 
-
-
 ### Git
 
-The url to your repository and to your deployed project
+[Github repository](https://github.com/OnizukaJS/Cooketh/tree/master)
 
-[Repository Link]()
-
-[Deploy Link]()
+[Deploy Link]() (missing)
 
 
-
-****
-
-<br>
 
 ### Userflow
 
-Miro: https://miro.com/app/board/o9J_koKWL38=/
+[Miro user flow](https://miro.com/app/board/o9J_koKWL38=/)
+
+
+
+### Wireframes
+
+[Balsamiq wireframes](https://drive.google.com/file/d/1Qsk09SaDFueiylDch3HKCGvD-RZ33abU/view?usp=sharing)
+
+
 
 ### Slides
 
-The url to your presentation slides
-
-[Slides Link](https://docs.google.com/presentation/d/1P5FIi0vHZBUcgUtmt1M4_lLCO5dwdJ4UOgtJa4ehGfk/edit?usp=sharing)
+[cooketh Google slides](https://docs.google.com/presentation/d/1dx2S04QgKN3ZaoDMJTh3-Nomuq5VjSl0ITodbFh44lc/edit?usp=sharing)
