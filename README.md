@@ -61,7 +61,7 @@ Everybody wins.
 | `GET`      | `/recipes/:id/edit`         | Renders the edit recipe view                                 |                                                              |
 | `POST`     | `/recipes/:id/edit`         | Send edit recipe info to server and updates the recipe in DB | {title, type of food, diet, allergies, serves X PAX, price/serving, ingredients, description, pictures} |
 | `GET`      | `recipes/:id/delete`        | **Deletes** selected recipe (only if user created it).       |                                                              |
-| --------   | ----routes/bookings.js----  | --------                                                     | --------                                                     |
+| --------   | ---routes/bookings.js---    | --------                                                     | --------                                                     |
 | `POST`     | `/bookings/new`             | Send the created event form data to the server (from /recipe:id form) | {data, time, address, number of dishes}                      |
 | `GET`      | `/bookings/:id/decline`     | **Deletes** a **PENDING** booking from DB                    |                                                              |
 | `GET`      | `/bookings/:id/accept`      | **Accepts** a **PENDING** booking from DB                    |                                                              |
@@ -72,9 +72,9 @@ Everybody wins.
 | `GET`      | `profile-user/:id/bookings` | Renders user's bookings (pending & accepted) view            |                                                              |
 | --------   | ----routes/chef.js----      | --------                                                     | --------                                                     |
 | `GET`      | `profile-chef/:id/edit`     | Renders edit chef profile view                               |                                                              |
-| `POST`     | `profile-chef/:id/edit`     | Sends edit-profile info to server and updates user in DB     | { name, email, phone-number, address, age, diet, allergies, password, description, profile picture, social media} |
+| `POST`     | `profile-chef/:id/edit`     | Sends edit-profile info to server and updates user in DB     | { name, email, phone-number, address, age, main-specialty, working-days, working-city, password, description, profile picture, social media} |
 | `GET`      | `profile-chef/:id`          | Renders chef profile view                                    |                                                              |
-| `GET`      | `profile-chef/:id/bookings` | Renders chef's bookings (pending & accepted) view            | { name, email, phone-number, address, age, main-specialty, working-days, working-city, password, description, profile picture, social media} |
+| `GET`      | `profile-chef/:id/bookings` | Renders chef's bookings (pending & accepted) view            |                                                              |
 
 ## Models
 
