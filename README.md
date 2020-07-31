@@ -30,7 +30,8 @@ Everybody wins.
 - **recipes list** - As a user I want to see the list of recipes and filter them by style of cooking, type of cooking (vegan, vegetarian, all), allergies and price.
 - **specific recipe** - As a user I want to see a more detailed view of the recipe with more pictures, description, ingredients, a form request to the chef and details of the chef.
 - **my (user) profile** - As a user I want to be able to edit my profile.
-- **my (chef) profile** - As a chef I want to be able to edit my profile and my recipes
+- **my (chef) profile** - As a chef I want to be able to edit my profile and see my recipes.
+- **my recipes**: -As a chef I want to be able to create, edit and delete my recipes.
 - **my bookings** - As a user I want to see accepted bookings and be able to delete my pending requests.
   -As a chef I wan to see my accepted bookings or delete my pending requests.
 - **FAQ** - As a user and as a chef I want to see the most frequented asked questions about this website.
@@ -43,11 +44,11 @@ Everybody wins.
 | ---------- | --------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | --------   | ----routes/auth.js----      | --------                                                     | --------                                                     |
 | `GET`      | `/login`                    | Renders `login` form view.                                   |                                                              |
-| `POST`     | `/login`                    | Sends Login form data to the server. Redirects both users and chefs to the home page. | { email, password, areYouAChef?: true/false}                 |
+| `POST`     | `/login`                    | Sends Login form data to the server. Redirects both users and chefs to the home page. | { email, password, isAChef: true/false}                      |
 | `GET`      | `/signup-user`              | Renders `signup` USER form view.                             |                                                              |
-| `POST`     | `/signup-user`              | Sends sign-up USER info to the server and creates user in the DB.<br />Redirects the user to the login page. | { name, email, phone-number, address, age, diet, allergies, password }<br />{<u>not mandatory</u>: description, profile picture, social media} |
+| `POST`     | `/signup-user`              | Sends sign-up USER info to the server and creates user in the DB.<br />Redirects the user to the home page (automatic login). | { name, email, phone-number, address, age, diet, allergies, password }<br />{<u>not mandatory</u>: description, profile picture, social media} |
 | `GET`      | `/signup-chef`              | Renders `signup` CHEF form view.                             |                                                              |
-| `POST`     | `/signup-chef`              | Sends sign-up USER info to the server and creates user in the DB.<br />Redirects the chef to the login page. | { name, email, phone-number, address, age, main-specialty, working-days, working-city, password, description }<br />{<u>not mandatory</u>: profile picture, social media} |
+| `POST`     | `/signup-chef`              | Sends sign-up USER info to the server and creates user in the DB.<br />Redirects the chef to the home page (automatic login). | { name, email, phone-number, address, age, main-specialty, working-days, working-city, password, description }<br />{<u>not mandatory</u>: profile picture, social media} |
 | `GET`      | `/logout`                   |                                                              |                                                              |
 | --------   | ----routes/index.js----     | --------                                                     | --------                                                     |
 | `GET`      | `/`                         | Main page route. Renders index view                          |                                                              |
@@ -57,22 +58,22 @@ Everybody wins.
 | `GET`      | `/recipes/:id`              | Renders the selected recipe view                             |                                                              |
 |            | MIDDLEWARE ACCESS           |                                                              |                                                              |
 | `GET`      | `/recipes/new`              | Renders the create recipe form                               |                                                              |
-| `POST`     | `/recipes/new`              | Sends created reicpe form data to the server.<br />Redirects to chef profile. | {title, type of food, diet, allergies, serves X PAX, price/serving, ingredients, description, pictures} |
+| `POST`     | `/recipes/new`              | Sends created recipe form data to the server.<br />Redirects to chef recipes' view with a success/error message. | {title, type of food, diet, allergies, serves X PAX, price/serving, ingredients, description, pictures} |
 | `GET`      | `/recipes/:id/edit`         | Renders the edit recipe view                                 |                                                              |
-| `POST`     | `/recipes/:id/edit`         | Send edit recipe info to server and updates the recipe in DB | {title, type of food, diet, allergies, serves X PAX, price/serving, ingredients, description, pictures} |
-| `GET`      | `recipes/:id/delete`        | **Deletes** selected recipe (only if user created it).       |                                                              |
+| `POST`     | `/recipes/:id/edit`         | Send edit recipe info to server and updates the recipe in DB.<br />Redirects to chef recipes' view with a success/error message. | {title, type of food, diet, allergies, serves X PAX, price/serving, ingredients, description, pictures} |
+| `GET`      | `recipes/:id/delete`        | **Deletes** selected recipe (only if user created it).<br />Re-renders chef profile view with a success/error message. |                                                              |
 | --------   | ---routes/bookings.js---    | --------                                                     | --------                                                     |
-| `POST`     | `/bookings/new`             | Send the created event form data to the server (from /recipe:id form) | {data, time, address, number of dishes}                      |
-| `GET`      | `/bookings/:id/decline`     | **Deletes** a **PENDING** booking from DB                    |                                                              |
-| `GET`      | `/bookings/:id/accept`      | **Accepts** a **PENDING** booking from DB                    |                                                              |
+| `POST`     | `/bookings/new`             | Send the created event form data to the server (from /recipe:id form).<br />Redirects to user bookings view to see pending & accepted requests. | {data, time, address, number of dishes}                      |
+| `GET`      | `/bookings/:id/decline`     | **Deletes** a **PENDING** booking from DB. <br />Re-renders same page (`profile-chef OR user/:id/bookings`) with a success/error message. |                                                              |
+| `GET`      | `/bookings/:id/accept`      | **Accepts** a **PENDING** booking from DB<br />Re-renders same page (`profile-chef OR user/:id/bookings`) with a success/error message. |                                                              |
 | --------   | ---routes/user.js---        | --------                                                     | --------                                                     |
 | `GET`      | `profile-user/:id/edit`     | Renders edit user profile view                               |                                                              |
-| `POST`     | `profile-user/:id/edit`     | Sends edit-profile info to server and updates user in DB     | { name, email, phone-number, address, age, diet, allergies, password, description, profile picture, social media} |
+| `POST`     | `profile-user/:id/edit`     | Sends edit-profile info to server and updates user in DB.<br />Redirects to user profile view with a success/error message | { name, email, phone-number, address, age, diet, allergies, password, description, profile picture, social media} |
 | `GET`      | `profile-user/:id`          | Renders user profile view                                    |                                                              |
 | `GET`      | `profile-user/:id/bookings` | Renders user's bookings (pending & accepted) view            |                                                              |
 | --------   | ----routes/chef.js----      | --------                                                     | --------                                                     |
 | `GET`      | `profile-chef/:id/edit`     | Renders edit chef profile view                               |                                                              |
-| `POST`     | `profile-chef/:id/edit`     | Sends edit-profile info to server and updates user in DB     | { name, email, phone-number, address, age, main-specialty, working-days, working-city, password, description, profile picture, social media} |
+| `POST`     | `profile-chef/:id/edit`     | Sends edit-profile info to server and updates user in DB.<br />Redirects to chef profile view with a success/error message | { name, email, phone-number, address, age, main-specialty, working-days, working-city, password, description, profile picture, social media} |
 | `GET`      | `profile-chef/:id`          | Renders chef profile view                                    |                                                              |
 | `GET`      | `profile-chef/:id/bookings` | Renders chef's bookings (pending & accepted) view            |                                                              |
 
@@ -88,7 +89,7 @@ User model
     address: { type: String, required: true },
     age: { type: Number, required: true },
     diet: { type: String, required: true },
-    allergies: { type: [String], required: true },
+    allergies: [{ type: String, required: true }],
     password: { type: String, required: true },
     picture: String,
     description: String,
@@ -112,7 +113,7 @@ Chef model
     phoneNumber: { type: String, required: true },
     address: { type: String, required: true },
     mainCookSpecialty: { type: String, required: true },
-    workingDays: { type: [String], required: true },
+    workingDays: [{ type: String, required: true }],
     workingCity: { type: String, required: true },
     password: { type: String, required: true },
     description: { type: String, required: true },
@@ -136,7 +137,7 @@ Recipe model
     title: { type: String, required: true },
     typeOfFood: { type: String, required: true },
     diet: { type: String, required: true },
-    allergies: { type: [String], required: true },
+    allergies: [{ type: String, required: true }],
     serves: { type: String, required: true },
     price: { type: Number, required: true },
     ingredients: { type: String, required: true },
@@ -153,8 +154,7 @@ Booking model
 
 ```javascript
 {
-    date: { type: Date, required: true },
-    hour: { type: String, required: true },
+    dateAndHour: { type: String, required: true },
     address: { type: String, required: true },
     numberOfDishes: { type: Number, required: true },
     chef: { type: Schema.Types.ObjectId, ref: 'Chef'},

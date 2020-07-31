@@ -26,10 +26,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    allergies: {
-        type: [String],
+    allergies: [{
+        type: String,
         required: true
-    },
+    }],
     password: {
         type: String,
         required: true

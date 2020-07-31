@@ -26,10 +26,10 @@ const chefSchema = new Schema({
         type: String,
         required: true
     },
-    workingDays: {
-        type: [String],
+    workingDays: [{
+        type: String,
         required: true
-    },
+    }],
     workingCity: {
         type: String,
         required: true

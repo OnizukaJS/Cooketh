@@ -34,10 +34,10 @@ const recipeSchema = new Schema({
         type: String,
         required: true
     },
-    pictures: {
-        type: [String],
+    pictures: [{
+        type: String,
         required: true
-    },
+    }],
     chef: {
         type: Schema.Types.ObjectId,
         ref: 'Chef'

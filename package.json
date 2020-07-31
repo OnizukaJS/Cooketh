@@ -1,0 +1,19 @@
+{
+  "name": "cooketh",
+  "version": "1.0.0",
+  "description": "Project 2 Ironhack - Jean Baptiste & Sergio Centellas",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OnizukaJS/Cooketh.git"
+  },
+  "author": "Jean Baptiste Castillo, Sergio Centellas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OnizukaJS/Cooketh/issues"
+  },
+  "homepage": "https://github.com/OnizukaJS/Cooketh#readme"
+}
