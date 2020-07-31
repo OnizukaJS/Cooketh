@@ -18,10 +18,6 @@ const chefSchema = new Schema({
         type: String,
         required: true
     },
-    age: {
-        type: Number,
-        required: true
-    },
     mainCookSpecialty: {
         type: String,
         required: true
@@ -50,14 +46,10 @@ const chefSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Recipe'
     }],
-    pendingBookings: [{
+    bookings: [{
         type: Schema.Types.ObjectId,
         ref: 'Booking'
     }],
-    acceptedBookings: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Booking'
-    }]
 }, {
     timestamps: true
 });

@@ -14,6 +14,11 @@ const bookingSchema = new Schema({
         type: Number,
         required: true
     },
+    status: {
+        type: String,
+        enum: ['pending', 'accepted'],
+        default: 'pending'
+    },
     chef: {
         type: Schema.Types.ObjectId,
         ref: 'Chef'
@@ -22,12 +27,10 @@ const bookingSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    recipe: [ //Vincula este modelo con recipes. Es un array porque hay varias recetas
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Recipe' //Referencia al modelo exportado
-        }
-    ]
+    recipe: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Recipe'
+    }]
 }, {
     timestamps: true
 });

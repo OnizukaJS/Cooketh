@@ -14,10 +14,10 @@ const recipeSchema = new Schema({
         type: String,
         required: true
     },
-    allergies: {
-        type: [String],
+    allergies: [{
+        type: String,
         required: true
-    },
+    }],
     serves: {
         type: String,
         required: true
@@ -34,10 +34,10 @@ const recipeSchema = new Schema({
         type: String,
         required: true
     },
-    pictures: [{
+    pictures: {
         type: String,
         required: true
-    }],
+    },
     chef: {
         type: Schema.Types.ObjectId,
         ref: 'Chef'
